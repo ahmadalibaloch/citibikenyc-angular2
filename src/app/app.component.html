@@ -1,3 +1,24 @@
-<h1>
-  {{title}}
-</h1>
+<md-sidenav-container>
+  <md-toolbar color="primary">
+    <span>
+    <md-slide-toggle [(ngModel)]="slideToggleModel"></md-slide-toggle>
+  </span>
+    <span>Video Lectures</span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+
+  </md-toolbar>
+  <md-sidenav mode="side" opened="{{slideToggleModel}}">
+    <md-nav-list>
+      <a md-list-item routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a md-list-item routerLink="/map" routerLinkActive="active">Map View</a>
+      <a md-list-item routerLink="/usage" routerLinkActive="active">Stations Usage</a>
+    </md-nav-list>
+  </md-sidenav>
+  <div class="my-content">
+    <router-outlet></router-outlet>
+  </div>
+  <!--<button md-mini-fab class="my-fab">
+      <md-icon>add</md-icon>
+    </button>-->
+</md-sidenav-container>
