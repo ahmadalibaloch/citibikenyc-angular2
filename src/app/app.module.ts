@@ -7,9 +7,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+import { AgmCoreModule } from 'angular2-google-maps/core';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BikemapComponent } from './bikemap/bikemap.component';
+import { NYCBikeDataService } from "app/services/nycbike-data.service";
 const appRoutes: Routes = [
+  {
+    path: 'map',
+    component: BikemapComponent
+  },
   {
     path: '',
     redirectTo: '/',
@@ -19,7 +27,8 @@ const appRoutes: Routes = [
 ];
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BikemapComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -28,9 +37,12 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCjiWIew5Eeeuu68zAqgTzkUFnHdb9a98I'
+    })
   ],
-  providers: [],
+  providers: [NYCBikeDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
