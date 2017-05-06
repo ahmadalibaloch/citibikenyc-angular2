@@ -1,3 +1,13 @@
+<div class="top-controlls" fxLayout="flex" fxLayoutAlign="center center">
+  <md-input-container>
+    <input (value)="onChange($event)"  mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
+      type="text" placeholder="Lookup Station" />
+  </md-input-container>
+  <md-input-container>
+    <input mdInput [(ngModel)]="distance" type="number" placeholder="Distance" />
+    <span mdSuffix>km</span>
+  </md-input-container>
+</div>
 <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true" (mapClick)="mapClicked($event)">
 
   <sebm-google-map-marker *ngFor="let m of stations; let i = index" [latitude]="m.lat" [longitude]="m.lon" [iconUrl]="m.getIconUrl()"
@@ -9,12 +19,10 @@
         <div class="shortName">Bike Station: {{m.short_name}}</div>
         <hr>
         <div fxLayout="flex" fxLayoutAlign="space-around center">
-          <img class="icon" src="https://member.citibikenyc.com/versions/1488899935/8dResources/eightdbike/images/maps/buttons/bikes.png"
-          /> Available Bikes: <span class="boldNumber">{{m.status.num_bikes_available}} of {{m.capacity}}</span></div>
+          <img class="icon" src="assets/bike.png" /> Available Bikes: <span class="boldNumber">{{m.status.num_bikes_available}} of {{m.capacity}}</span></div>
         <hr>
         <div fxLayout="flex" fxLayoutAlign="space-around center">
-          <img class="icon" src="https://member.citibikenyc.com/versions/1488899935/8dResources/eightdbike/images/maps/buttons/docks.png"
-          /> Available Docks: <span class="boldNumber">{{m.status.num_docks_available}}</span></div>
+          <img class="icon" src="assets/dock.png" /> Available Docks: <span class="boldNumber">{{m.status.num_docks_available}}</span></div>
       </div>
     </sebm-google-map-info-window>
 

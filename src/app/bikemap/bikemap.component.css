@@ -16,7 +16,7 @@ sebm-google-map-info-window div{
   font-size: 14px;
 }
 .shortName{
-  color:cornflowerblue;
+  color:darkblue;
   font-size: 10px;
 }
 .boldNumber{
@@ -25,4 +25,13 @@ sebm-google-map-info-window div{
 sebm-google-map-marker img{
   width:40px;
   height:40px;
+}
+
+md-input-container{
+    min-width: 250px;
+    max-width: 500px;
+    margin-left: 10px;
+}
+.top-controlls{
+
 }

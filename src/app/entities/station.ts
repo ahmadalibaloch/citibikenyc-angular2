@@ -32,5 +32,6 @@ export class Station {
         this.name = station.name;
         this.short_name = station.short_name;
         this.region_id = station.region_id;
+        this.status = new StationStatusModel();
     }
 }

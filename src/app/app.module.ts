@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdInputModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
@@ -13,6 +13,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BikemapComponent } from './bikemap/bikemap.component';
 import { NYCBikeDataService } from "app/services/nycbike-data.service";
+import { CdAutocompleteDirective } from "app/mdautocomplete/cd-autocomplete.directive";
+import { CdAutocompleteComponent } from "app/mdautocomplete/cd-autocomplete.component";
+
 const appRoutes: Routes = [
   {
     path: 'map',
@@ -28,19 +31,23 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BikemapComponent
+    BikemapComponent,
+    CdAutocompleteComponent,
+    CdAutocompleteDirective
   ],
+  entryComponents: [CdAutocompleteComponent],
   imports: [
     RouterModule.forRoot(appRoutes),
     MaterialModule.forRoot(),
     FlexLayoutModule,
+    MdInputModule,
     BrowserModule,
     FormsModule,
     HttpModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCjiWIew5Eeeuu68zAqgTzkUFnHdb9a98I'
-    })
+    }),
   ],
   providers: [NYCBikeDataService],
   bootstrap: [AppComponent]

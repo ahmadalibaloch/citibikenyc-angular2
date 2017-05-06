@@ -15,7 +15,7 @@ export class NYCBikeDataService {
         let apiUrl = this.apiDomain + this.apiStations;
 
         return this.http.get(apiUrl)
-            .map(x => x.json().data.stations.map(
+            .map(x => x.json().data.stations.slice(0,100).map(
                 s => new Station(s)
             ));
     }
