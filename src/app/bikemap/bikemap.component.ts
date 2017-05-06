@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
 import { CdAutocomplete } from "app/mdautocomplete/cd-autocomplete.model";
 import { CdAutocompleteResponse } from "app/mdautocomplete/cd-autocomplete-response.model";
+import { CircleManager, SebmGoogleMapCircle, LatLngBounds } from "angular2-google-maps/core";
 
 @Component({
   selector: 'app-bikemap',
@@ -15,16 +16,22 @@ import { CdAutocompleteResponse } from "app/mdautocomplete/cd-autocomplete-respo
   styleUrls: ['./bikemap.component.css']
 })
 export class BikemapComponent implements OnInit {
+  distance: number = 100;
 
   lat: number = 40.737580;
   lng: number = -74.005048;
   zoom: number = 13;
   stations: Station[];
-  thisValue: string;
+  selectedStation: Station;
+  circles: SebmGoogleMapCircle[];
+  fitBounds: LatLngBounds;
 
-  constructor(private bikeService: NYCBikeDataService) {
+  constructor(private bikeService: NYCBikeDataService, private circleManager: CircleManager) {
     this.stations = [];
+    this.selectedStation = new Station({});
+    this.circles = [];
   }
+
 
   ngOnInit() {
     this.bikeService.getStations().subscribe((stations: Station[]) => {
@@ -42,11 +49,31 @@ export class BikemapComponent implements OnInit {
       })
     });
   }
-  onChange(data) {
-    console.log("changed", data);
+  radiusToZoom(radius: number) {
+    return Math.round(20 - Math.log(radius) / Math.LN2);
+  }
+  onChange(stationName) {
+    let selectedStation = this.stations.find(x => x.name == stationName);
+    if (!selectedStation) {
+      this.zoom = 13;
+      this.lat = 40.737580;
+      this.lng = -74.005048;
+      this.distance = 100;
+      this.selectedStation = new Station({});
+      return;
+    }
+    this.lat = selectedStation.lat;
+    this.lng = selectedStation.lon;
+    this.selectedStation = selectedStation;
+    this.setMapZoom(this.distance)
+  }
+  setMapZoom(radius: number) {
+    if (!this.selectedStation.id) {
+      return
+    }
+    this.zoom = this.radiusToZoom(this.distance);
   }
 
-  inputValue: string = "";
   inputAutocomplete: CdAutocomplete = {
     changeTrigger: false,
     list: []

@@ -7,7 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule, MdInputModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule, CircleManager, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,7 +49,7 @@ const appRoutes: Routes = [
       apiKey: 'AIzaSyCjiWIew5Eeeuu68zAqgTzkUFnHdb9a98I'
     }),
   ],
-  providers: [NYCBikeDataService],
+  providers: [NYCBikeDataService,CircleManager,GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

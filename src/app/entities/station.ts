@@ -11,7 +11,14 @@ export class Station {
     public region_id: number;
 
     public status: StationStatusModel;
-
+    public lastReported() {
+        if (this.status) {
+            let d = new Date(0);
+            d.setSeconds(this.status.last_reported);
+            return d.toLocaleString();;
+        }
+        else return "No specified"
+    }
     //
     public iconUrl: string;
     public getIconUrl() {

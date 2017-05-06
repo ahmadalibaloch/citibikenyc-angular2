@@ -1,22 +1,22 @@
 <div class="top-controlls" fxLayout="flex" fxLayoutAlign="center center">
   <md-input-container>
-    <input (value)="onChange($event)"  mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
+    <input (value)="onChange($event)" mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
       type="text" placeholder="Lookup Station" />
   </md-input-container>
   <md-input-container>
-    <input mdInput [(ngModel)]="distance" type="number" placeholder="Distance" />
+    <input [disabled]="!selectedStation.id" mdInput (ngModelChange)="setMapZoom($event)" [(ngModel)]="distance" type="number" placeholder="Distance" />
     <span mdSuffix>km</span>
   </md-input-container>
 </div>
 <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true" (mapClick)="mapClicked($event)">
-
   <sebm-google-map-marker *ngFor="let m of stations; let i = index" [latitude]="m.lat" [longitude]="m.lon" [iconUrl]="m.getIconUrl()"
     [markerDraggable]="false">
     <div></div>
-    <sebm-google-map-info-window>
+    <sebm-google-map-info-window [isOpen]="m.id==selectedStation.id">
       <div fxLayout="column">
         <div class="stationName">{{m.name}}</div>
         <div class="shortName">Bike Station: {{m.short_name}}</div>
+        <hr> Last reported : {{m.lastReported()}}
         <hr>
         <div fxLayout="flex" fxLayoutAlign="space-around center">
           <img class="icon" src="assets/bike.png" /> Available Bikes: <span class="boldNumber">{{m.status.num_bikes_available}} of {{m.capacity}}</span></div>
@@ -25,14 +25,5 @@
           <img class="icon" src="assets/dock.png" /> Available Docks: <span class="boldNumber">{{m.status.num_docks_available}}</span></div>
       </div>
     </sebm-google-map-info-window>
-
   </sebm-google-map-marker>
-
-  <!--<sebm-google-map-circle [latitude]="lat + 0.3" [longitude]="lng" 
-          [radius]="5000"
-          [fillColor]="'red'"
-          [circleDraggable]="true"
-          [editable]="true">
-      </sebm-google-map-circle>-->
-
 </sebm-google-map>
