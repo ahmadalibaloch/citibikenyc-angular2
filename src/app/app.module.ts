@@ -19,6 +19,7 @@ import { CdAutocompleteDirective } from "app/mdautocomplete/cd-autocomplete.dire
 import { CdAutocompleteComponent } from "app/mdautocomplete/cd-autocomplete.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SortPipe } from "app/pipes/sortPipe";
+import { UsageComponent } from './usage/usage.component';
 
 const appRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'usage',
+    component: UsageComponent
   },
   {
     path: '',
@@ -44,6 +49,7 @@ const appRoutes: Routes = [
     CdAutocompleteDirective,
     DashboardComponent,
     SortPipe,
+    UsageComponent,
   ],
   entryComponents: [CdAutocompleteComponent],
   imports: [
@@ -56,7 +62,8 @@ const appRoutes: Routes = [
     HttpModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCjiWIew5Eeeuu68zAqgTzkUFnHdb9a98I'
+      apiKey: 'AIzaSyCjiWIew5Eeeuu68zAqgTzkUFnHdb9a98I',
+      libraries: ['visualization']
     }),
     ChartsModule,
   ],

@@ -45,6 +45,7 @@ export class BikemapComponent implements OnInit {
       }
       stationsDataArray.forEach(
         ns => {
+          //only update needed props for best performance and minimal redraw
           let so = this.stationsDataArray.find(s => s.station_id == ns.station_id);
           if (!so) {
             this.stationsDataArray.push(ns);

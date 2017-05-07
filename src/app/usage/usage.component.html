@@ -1,0 +1,13 @@
+<div class="top-controlls" fxLayout="flex" fxLayoutAlign="center center">
+  <md-select placeholder="Select Heat Map type" [(ngModel)]="heatMapType" (ngModelChange)="drawHeatMap($event)">
+    <md-option [value]="busy">
+      Busy Areas
+    </md-option>
+    <md-option [value]="slow">
+      Slow Stations
+    </md-option>
+  </md-select>
+  <md-checkbox [(ngModel)]="heatMapRadius" (ngModelChange)="setHeatMapRadius($event)">HeatMap Radius Toggle</md-checkbox>
+</div>
+<div id="heatmap">
+</div>
