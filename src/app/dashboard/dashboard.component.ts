@@ -67,10 +67,10 @@ export class DashboardComponent implements OnInit {
       barDataArray[1].data.push(availableDocksCount);
       barLabels.push(key);
     }
-    let barChart = this.createDashItem("Total Bikes Status " + stationSelectedName, "Number of bikes and docks available over time of ten seconds interval", 'bar', barLabels, barDataArray, { scaleShowVerticalLines: false, responsive: true });
+    let barChart = this.createDashItem("BAR CHART - Total Bikes Status " + stationSelectedName, "Number of bikes and docks available over time of ten seconds interval", 'bar', barLabels, barDataArray, { scaleShowVerticalLines: false, responsive: true });
     this.dashItems[0] = barChart;
     //==========LINE CHART
-    let lineChart = this.createDashItem("Total Bikes Status " + stationSelectedName, "Number of bikes and docks available over time of ten seconds interval", 'line', barLabels, barDataArray, { responsive: true });
+    let lineChart = this.createDashItem("LINE CHART - Total Bikes Status " + stationSelectedName, "Number of bikes and docks available over time of ten seconds interval", 'line', barLabels, barDataArray, { responsive: true });
     this.dashItems[1] = lineChart;
 
   }
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
     pieDataArray.push(stationsZeroBikes);
     pieDataArray.push(stations50MinusBikes);
     pieDataArray.push(stations50PlusBikes);
-    let pieChart = this.createDashItem("Total Stations Status " + stationSelectedName, "Stations with number of over and less than 50 percent available bikes", 'pie', pieLabels, pieDataArray, null);
+    let pieChart = this.createDashItem("PIE CHART - Total Stations Status " + stationSelectedName, "Stations with number of over and less than 50 percent available bikes", 'pie', pieLabels, pieDataArray, null);
     this.dashItems[2] = pieChart;
     //==========RADAR CHART
     // //first records
@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit {
     radarDataArray[1].data.push(availableDocksCount);
     radarDataArray[1].data.push(disabledBikesCount);
     radarDataArray[1].data.push(disabledDocksCount);
-    let radarChart = this.createDashItem("Total Bikes Status " + stationSelectedName, "Number of bikes, docks, disabled bike and docks over time of ten seconds interval", 'radar', radarLabels, radarDataArray, { responsive: true });
+    let radarChart = this.createDashItem("RADAR CHART - Total Bikes Status " + stationSelectedName, "Number of bikes, docks, disabled bike and docks over time of ten seconds interval", 'radar', radarLabels, radarDataArray, { responsive: true });
     this.dashItems[3] = radarChart;
 
   }

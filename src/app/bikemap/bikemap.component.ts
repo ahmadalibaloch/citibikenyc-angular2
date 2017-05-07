@@ -39,10 +39,6 @@ export class BikemapComponent implements OnInit {
 
   ngOnInit() {
     this.bikeService.getStationsDataSingle().subscribe((stationsDataArray: StationStatusModel[]) => {
-      if (this.stationsDataArray.length < 1) {
-        this.stationsDataArray = stationsDataArray;
-        return;
-      }
       stationsDataArray.forEach(
         ns => {
           //only update needed props for best performance and minimal redraw

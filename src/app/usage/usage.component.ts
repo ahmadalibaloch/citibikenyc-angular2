@@ -16,11 +16,11 @@ export class UsageComponent implements OnInit {
   map: any;
   mapOptions: MapOptions;
   mapCenter: LatLngLiteral;
-  _latitude: number = 40.737580;
-  _longitude: number = -74.005048;
-  _zoom: number = 13;
+  _latitude: number = 40.737580;//NYC
+  _longitude: number = -74.005048;//NYC
+  _zoom: number = 12;
   google: any;
-  heatMapType: string;
+  heatMapType: string = 'busyareas';
   constructor(private mapsApi: GoogleMapsAPIWrapper, private _loader: MapsAPILoader, private bikeService: NYCBikeDataService) {
     this.stationsDataArray = [];
     _loader.load().then(() => {
@@ -29,7 +29,7 @@ export class UsageComponent implements OnInit {
         if (this.stationsDataArray.length < 1) {
           this.stationsDataArray = stationsDataArray;
         }
-        this.drawHeatMap();
+        this.drawHeatMap(this.heatMapType);
       })
     });
   }
@@ -55,23 +55,23 @@ export class UsageComponent implements OnInit {
   }
   setHeatMapRadius() {
     if (this.heatmap)
-      this.heatmap.set('radius', this.heatMapRadius ? 20 : null);
+      this.heatmap.set('radius', this.heatMapRadius ? 15 : null);
   }
-  drawHeatMap() {
+  drawHeatMap(heatMapType: string) {
     if (this.heatmap)
       this.heatmap.setMap(null);
     if (!this.map || !this.google) return;
     this.heatmap = new this.google.maps.visualization.HeatmapLayer({
-      data: this.getPoints(),
+      data: this.getPoints(heatMapType),
       map: this.map
     });
-    this.heatmap.set('radius', this.heatMapRadius ? 20 : null);
+    this.setHeatMapRadius();
   }
-  getPoints() {
+  getPoints(heatMapType: string) {
     return this.stationsDataArray.map((s: StationStatusModel) => {
-      let weight = s.capacity-(s.capacity * s.num_bikes_available / 100);//busy
-      if (this.heatMapType == "slow")
-        weight = s.capacity - (s.capacity * s.num_docks_available / 100);
+      let weight = 100 - (s.num_bikes_available / s.capacity * 100);//busy
+      if (this.heatMapType == "busyareas")
+        weight = s.num_docks_available;
       return { location: new this.google.maps.LatLng(s.lat, s.lon), weight: weight };
       //return new this.google.maps.LatLng(s.lat, s.lon);
     });
