@@ -28,7 +28,6 @@ export class UsageComponent implements OnInit {
       this.bikeService.getStationsDataSingle().subscribe((stationsDataArray: StationStatusModel[]) => {
         if (this.stationsDataArray.length < 1) {
           this.stationsDataArray = stationsDataArray;
-          return;
         }
         this.drawHeatMap();
       })
@@ -70,7 +69,7 @@ export class UsageComponent implements OnInit {
   }
   getPoints() {
     return this.stationsDataArray.map((s: StationStatusModel) => {
-      let weight = s.capacity * s.num_docks_available / 100;//busy
+      let weight = s.capacity-(s.capacity * s.num_bikes_available / 100);//busy
       if (this.heatMapType == "slow")
         weight = s.capacity - (s.capacity * s.num_docks_available / 100);
       return { location: new this.google.maps.LatLng(s.lat, s.lon), weight: weight };
