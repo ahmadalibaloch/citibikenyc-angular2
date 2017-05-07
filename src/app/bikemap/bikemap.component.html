@@ -4,9 +4,22 @@
       type="text" placeholder="Lookup Station" />
   </md-input-container>
   <md-input-container>
-    <input [disabled]="!selectedStation.id" mdInput (ngModelChange)="setMapZoom($event)" [(ngModel)]="distance" type="number" placeholder="Distance" />
+    <input [disabled]="!selectedStation.id" mdInput (ngModelChange)="setMapZoom($event)" [(ngModel)]="distance" type="number"
+      placeholder="Distance" />
     <span mdSuffix>km</span>
   </md-input-container>
+  |
+  <div class="state">
+    <span>Total Stations</span> : {{stations.length}}
+  </div>
+  |
+  <div class="state">
+    <span>Less 50%</span> : {{less50()}}
+  </div>
+  |
+  <div class="state">
+    <span>Not reporting</span> : {{notReporting()}}
+  </div>
 </div>
 <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true" (mapClick)="mapClicked($event)">
   <sebm-google-map-marker *ngFor="let m of stations; let i = index" [latitude]="m.lat" [longitude]="m.lon" [iconUrl]="m.getIconUrl()"

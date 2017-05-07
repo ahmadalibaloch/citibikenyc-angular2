@@ -17,7 +17,7 @@ export class Station {
             d.setSeconds(this.status.last_reported);
             return d.toLocaleString();;
         }
-        else return "No specified"
+        else return "No updated recently"
     }
     //
     public iconUrl: string;

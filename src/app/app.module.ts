@@ -9,12 +9,16 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { AgmCoreModule, CircleManager, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BikemapComponent } from './bikemap/bikemap.component';
 import { NYCBikeDataService } from "app/services/nycbike-data.service";
 import { CdAutocompleteDirective } from "app/mdautocomplete/cd-autocomplete.directive";
 import { CdAutocompleteComponent } from "app/mdautocomplete/cd-autocomplete.component";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SortPipe } from "app/pipes/sortPipe";
 
 const appRoutes: Routes = [
   {
@@ -22,8 +26,12 @@ const appRoutes: Routes = [
     component: BikemapComponent
   },
   {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
+  {
     path: '',
-    redirectTo: '/',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   },
   //{ path: '**', component: AppComponent }
@@ -33,7 +41,9 @@ const appRoutes: Routes = [
     AppComponent,
     BikemapComponent,
     CdAutocompleteComponent,
-    CdAutocompleteDirective
+    CdAutocompleteDirective,
+    DashboardComponent,
+    SortPipe,
   ],
   entryComponents: [CdAutocompleteComponent],
   imports: [
@@ -48,8 +58,9 @@ const appRoutes: Routes = [
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCjiWIew5Eeeuu68zAqgTzkUFnHdb9a98I'
     }),
+    ChartsModule,
   ],
-  providers: [NYCBikeDataService,CircleManager,GoogleMapsAPIWrapper],
+  providers: [NYCBikeDataService, CircleManager, GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

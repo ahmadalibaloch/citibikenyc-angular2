@@ -8,5 +8,4 @@ import { MdInputModule, MdSidenav, MdSnackBar, MdSnackBarConfig, MdAutocompleteM
 })
 export class AppComponent {
   slideToggleModel = true;
-
 }

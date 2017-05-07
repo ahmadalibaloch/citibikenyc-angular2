@@ -35,3 +35,9 @@ md-input-container{
 .top-controlls{
 
 }
+.top-controlls *{
+  margin: 5px;
+}
+.top-controlls .state span{
+  font-weight: bold;
+}

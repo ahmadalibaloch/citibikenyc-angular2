@@ -8,5 +8,11 @@ export class StationStatusModel {
     is_renting: number;
     is_returning: number;
     last_reported: number;
-    eightd_has_available_keys: false
+    eightd_has_available_keys: false;
+
+    capacity: number;
+    shortName: string;
+    name: string;
+    lat: number;
+    lon: number;
 }

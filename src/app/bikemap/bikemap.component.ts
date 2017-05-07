@@ -9,6 +9,7 @@ import 'rxjs/add/operator/startWith';
 import { CdAutocomplete } from "app/mdautocomplete/cd-autocomplete.model";
 import { CdAutocompleteResponse } from "app/mdautocomplete/cd-autocomplete-response.model";
 import { CircleManager, SebmGoogleMapCircle, LatLngBounds } from "angular2-google-maps/core";
+import { MdSliderModule } from '@angular/material';
 
 @Component({
   selector: 'app-bikemap',
@@ -35,20 +36,62 @@ export class BikemapComponent implements OnInit {
 
   ngOnInit() {
     this.bikeService.getStations().subscribe((stations: Station[]) => {
-      this.stations = stations;
-      this.loadStationsStatus();
+      let page = 0, chunk = 100;
+      let toBe = Rx.Observable
+        .interval(500)
+        .flatMap(() => {
+          return Rx.Observable.of(stations.slice(page * chunk, (page * chunk) + chunk))
+        }).subscribe(stations => {
+          //we are pushing stations in intervals of (100 per) half second to lessen load on map drawing.
+          this.stations.push.apply(this.stations, stations);
+          if (stations.length < 1) {
+            toBe.unsubscribe();
+            //after stations are mapped, we will load their status
+            this.loadStationsStatus();
+          }
+          page++;
+        })
+
     });
   }
 
   loadStationsStatus() {
     this.bikeService.getStationsStatus().subscribe((stationsStatus: StationStatusModel[]) => {
-      stationsStatus.forEach(stationStatus => {
-        let thisStation = this.stations.find(s => s.id == Number(stationStatus.station_id));
-        if (thisStation)
-          thisStation.status = stationStatus;
-      })
-    });
+      //Update stations status after every 10 seconds REST API
+      //and then update stations status in those ten seconds in intervals again
+      let page = 0, chunk = 100;
+      let toBe = Rx.Observable
+        .interval(1000)
+        .flatMap(() => {
+          return Rx.Observable.of(stationsStatus.slice(page * chunk, (page * chunk) + chunk))
+        }).subscribe(stationsStatus => {
+          stationsStatus.forEach(stationStatus => {
+            let thisStation = this.stations.find(s => s.id == Number(stationStatus.station_id));
+            if (thisStation) {
+              //thisStation.status = stationStatus; No just update 3 props to save on angular rebinding
+              thisStation.status.num_bikes_available = stationStatus.num_bikes_available;
+              thisStation.status.num_docks_available = stationStatus.num_docks_available;
+              thisStation.status.last_reported = stationStatus.last_reported;
+            }
+          });
+          if (stationsStatus.length < 1)
+            toBe.unsubscribe();
+          page++;
+        });
+    })
   }
+
+  //STATES METHODS
+
+  less50() {
+    return this.stations.length ? this.stations.filter(x => x.getIconUrl() == "assets/planned.png").length : "N/A";
+  }
+
+  notReporting() {
+    return this.stations.length ? this.stations.filter(x => x.status.last_reported < 1).length : "N/A"
+  }
+
+  //MAP CODE BELOW
   radiusToZoom(radius: number) {
     return Math.round(20 - Math.log(radius) / Math.LN2);
   }
@@ -65,6 +108,7 @@ export class BikemapComponent implements OnInit {
     this.lat = selectedStation.lat;
     this.lng = selectedStation.lon;
     this.selectedStation = selectedStation;
+    this.distance = 10;
     this.setMapZoom(this.distance)
   }
   setMapZoom(radius: number) {
@@ -74,6 +118,7 @@ export class BikemapComponent implements OnInit {
     this.zoom = this.radiusToZoom(this.distance);
   }
 
+  //AUTO COMPLETE CODE BELOW - Put in Service
   inputAutocomplete: CdAutocomplete = {
     changeTrigger: false,
     list: []
@@ -84,7 +129,6 @@ export class BikemapComponent implements OnInit {
       return item.name.toLowerCase().startsWith(q.toLowerCase());
     });
   }
-
   /* TODO use API here */
   getStations(q: string) {
     this.updateInputAutocompleteData(this.filterList(q, this.stations));

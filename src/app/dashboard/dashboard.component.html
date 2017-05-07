@@ -1,0 +1,22 @@
+<div class="top-controlls" fxLayout="flex" fxLayoutAlign="center center">
+  <md-input-container>
+    <input (value)="onStationChange($event)" mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
+      type="text" placeholder="Lookup Station" />
+  </md-input-container>
+</div>
+<div class="flex-container" fxLayout="row" fxLayoutAlign="space-around center">
+  <md-card *ngFor="let dash of dashItems | sort:'order':'desc'">
+    <md-card-header>
+      <md-card-title>{{dash.title}}</md-card-title>
+      <md-card-subtitle>{{dash.description}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <md-spinner *ngIf="dash.loading"></md-spinner>
+      <canvas *ngIf="!dash.loading && dash.type!='pie'" baseChart [colors]="colors" [datasets]="dash.chartData.data" [options]="dash.chartData.options"
+        [labels]="dash.chartData.labels" [legend]="dash.chartData.legend" [chartType]="dash.chartData.type" (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
+      <canvas *ngIf="dash.type=='pie'" baseChart [colors]="colors" [data]="dash.chartData.data" [labels]="dash.chartData.labels"
+        [chartType]="dash.type" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+    </md-card-content>
+  </md-card>
+</div>

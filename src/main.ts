@@ -3,6 +3,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import * as Chart from 'chart.js';
+window['Chart'] = Chart;
 
 if (environment.production) {
   enableProdMode();

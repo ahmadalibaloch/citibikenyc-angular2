@@ -1,0 +1,25 @@
+.flex-container{
+    padding:2px;
+    flex-wrap:wrap;
+}
+md-card{
+    padding:0 !important;
+    min-width: 500px;
+    max-width:500px;
+    min-height:200px;
+    max-height:600px;
+    margin-bottom: 15px;
+}
+md-card-content{
+    padding:10px;
+}
+md-card-header{
+    padding:10px;
+    background: rgba(63, 81, 181, 0.25);
+}
+md-card-title{
+    font-size: 16px;
+}
+md-spinner{
+    align-self: center;
+}
