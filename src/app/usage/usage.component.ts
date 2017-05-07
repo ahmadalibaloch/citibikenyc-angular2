@@ -49,8 +49,6 @@ export class UsageComponent implements OnInit {
     this.mapsApi.createMap(heatMapDiv, mapOptions);
     this.mapsApi.getNativeMap().then((map: any) => {
       this.map = map;
-      console.log("Google", this.google);
-      console.log("Got the map", this.map);
     });
   }
   setHeatMapRadius() {

@@ -27,7 +27,7 @@ export class BikemapComponent implements OnInit {
   zoom: number = 13;
   selectedStation: StationStatusModel;
   stationsDataArray: StationStatusModel[];
-
+  inputValue: string;
   circles: SebmGoogleMapCircle[];
   fitBounds: LatLngBounds;
 

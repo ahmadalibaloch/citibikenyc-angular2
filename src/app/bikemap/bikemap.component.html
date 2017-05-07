@@ -4,23 +4,19 @@
       type="text" placeholder="Lookup Station" />
   </md-input-container>
   <md-input-container>
-    <input [disabled]="!selectedStation.id" mdInput (ngModelChange)="setMapZoom($event)" [(ngModel)]="distance" type="number"
+    <input [disabled]="!selectedStation.station_id" mdInput (ngModelChange)="setMapZoom($event)" [(ngModel)]="distance" type="number"
       placeholder="Distance" />
     <span mdSuffix>km</span>
   </md-input-container>
-  |
   <div class="state">
     <span>Total Stations</span> : {{stationsDataArray.length}}
   </div>
-  |
   <div class="state">
     <span>Minus 50%</span> : {{stations50MinusBikesCount}}
   </div>
-  |
   <div class="state">
     <span>Plus 50%</span> : {{stations50PlusBikesCount}}
   </div>
-  |
   <div class="state">
     <span>Not reporting</span> : {{stationsZeroBikesCount}}
   </div>

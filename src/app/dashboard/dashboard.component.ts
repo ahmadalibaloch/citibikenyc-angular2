@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   stationsDataArray: any[];
   stationsDataSingle: StationStatusModel[];
   dashItems: any[];
+  inputValue: string;
   constructor(private bikeService: NYCBikeDataService) { };
 
 
@@ -44,7 +45,6 @@ export class DashboardComponent implements OnInit {
   }
   onStationChange(stationName) {
     this.stationSelected = this.stations.find(x => x.name == stationName);
-    //console.log("Station Selected", stationName);
     this.updateChartsData(this.stationsDataArray);
     this.updateChartsDataSingle(this.stationsDataSingle);
   }
