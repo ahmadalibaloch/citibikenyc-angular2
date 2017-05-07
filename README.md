@@ -9,7 +9,7 @@ How to run:
 - In the folder run `ng serve`
 
 Google Map using Angular 2 Maps
-![Map View](https://raw.githubusercontent.com/ahmadalibaloch/citibikenyc-angular2/master/nyscitybikes.png "Preview Image Map")
+![Map View](https://github.com/ahmadalibaloch/citibikenyc-angular2/blob/master/mapview.png "Preview Image Map")
 
 Dashboard using Charts
 ![Dashboard](https://github.com/ahmadalibaloch/citibikenyc-angular2/raw/master/dashboard.png "Preview Image Dashboard")
