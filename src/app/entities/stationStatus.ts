@@ -15,4 +15,6 @@ export class StationStatusModel {
     name: string;
     lat: number;
     lon: number;
+    lastReportedStr:string;
+    iconUrl:string;
 }

@@ -1,6 +1,6 @@
 <div class="top-controlls" fxLayout="flex" fxLayoutAlign="center center">
   <md-input-container>
-    <input (value)="onChange($event)" mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
+    <input (value)="onStationChange($event)" mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
       type="text" placeholder="Lookup Station" />
   </md-input-container>
   <md-input-container>
@@ -10,32 +10,36 @@
   </md-input-container>
   |
   <div class="state">
-    <span>Total Stations</span> : {{stations.length}}
+    <span>Total Stations</span> : {{stationsDataArray.length}}
   </div>
   |
   <div class="state">
-    <span>Less 50%</span> : {{less50()}}
+    <span>Minus 50%</span> : {{stations50MinusBikesCount}}
   </div>
   |
   <div class="state">
-    <span>Not reporting</span> : {{notReporting()}}
+    <span>Plus 50%</span> : {{stations50PlusBikesCount}}
+  </div>
+  |
+  <div class="state">
+    <span>Not reporting</span> : {{stationsZeroBikesCount}}
   </div>
 </div>
-<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true" (mapClick)="mapClicked($event)">
-  <sebm-google-map-marker *ngFor="let m of stations; let i = index" [latitude]="m.lat" [longitude]="m.lon" [iconUrl]="m.getIconUrl()"
+<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true">
+  <sebm-google-map-marker *ngFor="let m of stationsDataArray; let i = index" [latitude]="m.lat" [longitude]="m.lon" [iconUrl]="m.iconUrl"
     [markerDraggable]="false">
     <div></div>
-    <sebm-google-map-info-window [isOpen]="m.id==selectedStation.id">
+    <sebm-google-map-info-window [isOpen]="m.station_id==selectedStation.station_id">
       <div fxLayout="column">
         <div class="stationName">{{m.name}}</div>
-        <div class="shortName">Bike Station: {{m.short_name}}</div>
-        <hr> Last reported : {{m.lastReported()}}
+        <div class="shortName">Bike Station: {{m.shortName}}</div>
+        <hr> Last reported : {{m.lastReportedStr}}
         <hr>
         <div fxLayout="flex" fxLayoutAlign="space-around center">
-          <img class="icon" src="assets/bike.png" /> Available Bikes: <span class="boldNumber">{{m.status.num_bikes_available}} of {{m.capacity}}</span></div>
+          <img class="icon" src="assets/bike.png" /> Available Bikes: <span class="boldNumber">{{m.num_bikes_available}} of {{m.capacity}}</span></div>
         <hr>
         <div fxLayout="flex" fxLayoutAlign="space-around center">
-          <img class="icon" src="assets/dock.png" /> Available Docks: <span class="boldNumber">{{m.status.num_docks_available}}</span></div>
+          <img class="icon" src="assets/dock.png" /> Available Docks: <span class="boldNumber">{{m.num_docks_available}}</span></div>
       </div>
     </sebm-google-map-info-window>
   </sebm-google-map-marker>

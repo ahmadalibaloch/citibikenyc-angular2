@@ -19,15 +19,16 @@ export class NYCBikeDataService {
             this.getStationsStatus().subscribe(stationsStatuses => {
                 let timeStr = new Date().toTimeString().substring(0, 8);
                 stationsStatuses.forEach(
-                    stationStatus => {
+                    (stationStatus: StationStatusModel) => {
                         let station = stations.find(s => s.id == stationStatus.station_id);
                         stationStatus.capacity = station.capacity;
                         stationStatus.name = station.name;
                         stationStatus.shortName = station.short_name;
                         stationStatus.lat = station.lat;
                         stationStatus.lon = station.lon;
-                    }
-                )
+                        stationStatus.lastReportedStr = this.getDateStr(stationStatus.last_reported);
+                        stationStatus.iconUrl = this.getIconUrl(stationStatus.num_bikes_available, stationStatus.capacity);
+                    });
                 this.stationsDataPerTime[timeStr] = stationsStatuses;
                 this.observableStationsStatus.next(stationsStatuses);//recent
                 this.observableDataArray.next(this.stationsDataPerTime);//over time
@@ -35,10 +36,24 @@ export class NYCBikeDataService {
         });
 
     };
+    public getIconUrl(bikesAvailable: number, capacity: number) {
+        let fiftyP = capacity * 50 / 100;
+        if (bikesAvailable < 1)
+            return "assets/outOfService.png";
+        else if (bikesAvailable < fiftyP)
+            return "assets/planned.png";
+        else return "assets/in-service.png";
+    }
+    getDateStr(seconds: number) {
+        if (seconds < 1) return "No Update";
+        let d = new Date(0);
+        d.setSeconds(seconds);
+        return d.toLocaleString();
+    }
     public getStationsData(): Rx.ReplaySubject<any> {
         return this.observableDataArray;
     }
-     public getStationsDataSingle(): Rx.ReplaySubject<any> {
+    public getStationsDataSingle(): Rx.ReplaySubject<any> {
         return this.observableStationsStatus;
     }
     public getStations(): Rx.Observable<Station[]> {
