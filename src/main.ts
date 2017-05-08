@@ -6,6 +6,8 @@ import { environment } from './environments/environment';
 import * as Chart from 'chart.js';
 window['Chart'] = Chart;
 
-enableProdMode();
+if (environment.production) {
+  enableProdMode();
+}
 
 platformBrowserDynamic().bootstrapModule(AppModule);

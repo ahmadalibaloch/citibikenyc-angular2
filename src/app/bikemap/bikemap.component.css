@@ -32,12 +32,30 @@ md-input-container{
     max-width: 500px;
     margin-left: 10px;
 }
+md-input-container.number{
+    min-width: 100px;
+    max-width: 500px;
+    margin-left: 10px;
+}
+input[type="number"]{
+  min-width: 101px;
+  width: 100px;
+}
 .top-controlls{
-
+  display: flex;
+  flex-wrap: wrap;
 }
 .top-controlls *{
   margin: 5px;
 }
+.top-controlls .state{
+    display: flex;
+    align-items: center;
+}
 .top-controlls .state span{
   font-weight: bold;
+}
+.top-controlls .state img{
+  width:20px;
+  height:20px;
 }

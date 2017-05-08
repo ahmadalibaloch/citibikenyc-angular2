@@ -3,22 +3,32 @@
     <input (value)="onStationChange($event)" mdInput [(ngModel)]="inputValue" [cdAutocomplete]="inputAutocomplete" (cdAutocompleteUpdate)="updateInputAutocomplete($event)"
       type="text" placeholder="Lookup Station" />
   </md-input-container>
-  <md-input-container>
+  <md-input-container class="number">
     <input [disabled]="!selectedStation.station_id" mdInput (ngModelChange)="setMapZoom($event)" [(ngModel)]="distance" type="number"
       placeholder="Distance" />
     <span mdSuffix>km</span>
   </md-input-container>
   <div class="state">
-    <span>Total Stations</span> : {{stationsDataArray.length}}
+    <span>Total Stations</span>
+    <span> : {{stationsDataArray.length}}</span>
   </div>
+  |
   <div class="state">
-    <span>Minus 50%</span> : {{stations50MinusBikesCount}}
+    <img src="assets/planned.png" />
+    <span>Minus 50%</span>
+    <span> : {{stations50MinusBikesCount}}</span>
   </div>
+  |
   <div class="state">
-    <span>Plus 50%</span> : {{stations50PlusBikesCount}}
+    <img src="assets/in-service.png" />
+    <span>Plus 50%</span>
+    <span> : {{stations50PlusBikesCount}}</span>
   </div>
+  |
   <div class="state">
-    <span>Not reporting</span> : {{stationsZeroBikesCount}}
+    <img src="assets/outOfService.png" />
+    <span>Not reporting</span>
+    <span> : {{stationsZeroBikesCount}}</span>
   </div>
 </div>
 <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="true">
